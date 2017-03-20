@@ -1,9 +1,9 @@
-﻿namespace MyServiceLibrary.Tests
+﻿namespace ServiceLibrary.Tests
 {
     using System;
     using System.Linq;
     using Moq;
-    using MyServiceLibrary;
+    using ServiceLibrary;
     using NUnit.Framework;
     using System.Collections.Generic;
     using Interfaces;

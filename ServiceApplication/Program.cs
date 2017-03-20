@@ -1,57 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using AppServiceConfiguration;
 using NLog;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Extensibility;
+using ServiceLibrary.Interfaces;
+using StorageManager;
 
 namespace ServiceApplication
 {
-    using MyServiceLibrary;
+    using ServiceLibrary;
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            //ICollection<User> storageToSave = new List<User>
+
+            var usm = new UserStorageManager();
+            var master = usm.GetMasterStorage(new UserIdGenerator(), null, null);
+
+            master.Add(new User { FirstName = "name", LastName = "surename", DateOfBirth = DateTime.Now });
+            master.Add(new User { FirstName = "name1", LastName = "surename1", DateOfBirth = DateTime.Now });
+            Console.WriteLine("Master");
+            foreach (var user in master.Search(u => true))
+            {
+                Console.WriteLine(user.FirstName + " " + user.LastName);
+            }
+            Console.ReadLine();
+
+            master.Delete(0);
+            Console.WriteLine("Master");
+            foreach (var user in master.Search(u => true))
+            {
+                Console.WriteLine(user.FirstName + " " + user.LastName);
+            }
+            Console.ReadLine();
+            usm.UnloadDomains();
+
+
+
+            //var usm = new UserStorageManager();
+            //var slaves = usm.GetSlaveServices();
+
+            //Console.ReadLine();
+            //Console.WriteLine("Slave");
+            //foreach (var user in slaves.First(a => true).Search(u => true))
             //{
-            //    new User {FirstName = "name", LastName = "surname", DateOfBirth = DateTime.Now},
-            //    new User {FirstName = "name1", LastName = "surname1", DateOfBirth = DateTime.Now},
-            //    new User {FirstName = "name12", LastName = "surname12", DateOfBirth = DateTime.Now}
-            //};
-
-            ////string path = Path.Combine(Environment.CurrentDirectory, "storage.txt");
-            //XmlStorageLoader xmlStorageLoader = new XmlStorageLoader();
-
-            //xmlStorageLoader.Save(storageToSave);
-
-            //ICollection<User> storageToLoad = null;
-
-            //storageToLoad = xmlStorageLoader.Load().ToList();
-
-            //foreach (var user in storageToLoad)
-            //{
-            //    Console.WriteLine($"{user.FirstName} {user.LastName} {user.DateOfBirth}");
+            //    Console.WriteLine(user.FirstName + " " + user.LastName);
             //}
+            //Console.ReadLine();
 
 
-            try
-            {
-                TestMethod("heheeh");
+            //Console.WriteLine("Slave");
+            //foreach (var user in slaves.First().Search(u => true))
+            //{
+            //    Console.WriteLine(user.FirstName + " " + user.LastName);
+            //}
+            //Console.ReadLine();
+            //usm.UnloadDomains();
 
-            }
-            catch (Exception)
-            {
-                
-            }
         }
 
-        [Log]
-        [LogException]
-        public static void TestMethod(string sdsdsd)
+        [Serializable]
+        class UserIdGenerator : IUserIdGenerator
         {
-            throw new ArgumentNullException();
+            private static int id = 0;
+
+            public int Generate(User user)
+            {
+                return id++;
+            }
         }
+
     }
 }

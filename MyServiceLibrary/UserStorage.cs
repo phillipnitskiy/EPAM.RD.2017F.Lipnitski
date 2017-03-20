@@ -1,4 +1,6 @@
-﻿namespace MyServiceLibrary
+﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Extensibility;
+namespace ServiceLibrary
 {
     using System;
     using System.Collections.Generic;
@@ -56,6 +58,7 @@
         /// <param name="user">User to add</param>
         /// <exception cref="System.ArgumentNullException">user</exception>
         /// <exception cref="System.ArgumentException">Invalid user data. - user</exception>
+        [Log]
         public void Add(User user)
         {
             if (user == null)
@@ -80,6 +83,7 @@
         /// <exception cref="System.InvalidOperationException">
         /// User does not exist.
         /// </exception>
+        [Log]
         public void Delete(int userId)
         {
             if (this.storage.Count <= 0)
@@ -102,6 +106,7 @@
         /// <param name="predicate">Search predicate</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">predicate</exception>
+        [Log]
         public IEnumerable<User> Search(Func<User, bool> predicate)
         {
             if (predicate == null)

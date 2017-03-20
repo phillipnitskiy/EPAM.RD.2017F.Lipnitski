@@ -1,4 +1,4 @@
-﻿namespace MyServiceLibrary.Interfaces
+﻿namespace ServiceLibrary.Interfaces
 {
     using System.Collections.Generic;
 

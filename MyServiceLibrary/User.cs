@@ -1,7 +1,8 @@
-﻿namespace MyServiceLibrary
+﻿namespace ServiceLibrary
 {
     using System;
 
+    [Serializable]
     public class User
     {
         /// <summary>
@@ -51,7 +52,7 @@
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return (FirstName + LastName + Id + DateOfBirth).GetHashCode();
         }
     }
 }

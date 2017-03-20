@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Xml.Serialization;
-
-namespace MyServiceLibrary
+﻿namespace ServiceLibrary
 {
     using Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// XML Storage Loader
     /// </summary>
-    /// <seealso cref="MyServiceLibrary.Interfaces.IStorageLoader" />
+    /// <seealso cref="IStorageLoader" />
     public class XmlStorageLoader : IStorageLoader
     {
 

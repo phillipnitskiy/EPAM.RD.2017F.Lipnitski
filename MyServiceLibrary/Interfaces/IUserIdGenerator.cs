@@ -1,4 +1,4 @@
-﻿namespace MyServiceLibrary.Interfaces
+﻿namespace ServiceLibrary.Interfaces
 {
     public interface IUserIdGenerator
     {
